@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+#include<stdlib.h>
+#define pb push_back
+#define pp pair
+#define mp make_pair
+#define mod 100000
+#define ll long long
+#define pie 3.141592653589793
+#define sc(a) scanf("%c",&a)
+#define si(a) scanf("%d",&a)
+#define ss(a) scanf("%s",a)
+#define sl(a) scanf("%lld",&a)
+#define all(c) c.begin(), c.end()
+#define pi(a) printf("%d",a)
+#define pc(a) printf("%c",a)
+#define pl(a) printf("%lld",a)
+#define ps(a) printf("%s",a)
+#define F first
+#define S second
+#define INF 0x3f3f3f3f
+#define FOR(i,j,k,in) for(ll i=j ; i<k ; i=i+in)
+#define RFOR(i,j,k,dc) for(ll i=j ; i>=k; i=i-dc)
+#define N 100001
+using namespace std;
+ll sv[N],test,q,l,r;
+vector <ll> sieve,out;
+vector <ll> flag;
+void filter()
+{
+    flag.resize(N);
+    fill(begin(flag),end(flag),true);
+    flag[0]=flag[1]=false;
+    for(ll i=2 ; i<sqrt(N) ; i++)
+    {
+        if(flag.at(i))
+        {
+            for(ll j=i*2 ; j<N ; j+=i)
+                flag.at(j)=false;
+        }
+    }
+    FOR(i,0,N,1)
+    {
+        if(flag[i])
+            sieve.push_back(i);
+    }
+}
+void output(ll low , ll high)
+{
+   bool isprime[high-low+1];
+    for(int i=0 ; i<=high-low ; i++)
+       isprime[i]=true;
+    for(int i=0 ; (sieve[i]*sieve[i])<=high ; i++)
+    {
+        ll start = (low/sieve[i])*sieve[i];
+         if(start < low)
+          start =start+sieve[i];
+
+        if(start == sieve[i])
+        {
+            isprime[start-low]=true;
+        }
+         for(int j=start ; j<=high ; j+=sieve[i])
+         {
+             isprime[j-low]=false;
+         }
+    }
+    for(int i=0 ; i<=high-low ; i++)
+    {
+        if(isprime[i])
+            cout << i+low << endl;
+    }
+}
+
+int main()
+{
+    ll test;
+    sl(test);
+    filter();
+    while(test--)
+    {
+        ll low , high;
+        sl(low),sl(high);
+        if(high < N)
+        {
+            for(auto i1 = lower_bound(begin(sieve),end(sieve),low) ; i1 != upper_bound(begin(sieve),end(sieve),high) ; ++i1)
+                cout << *i1 << endl;
+        }
+        else{
+        output(low,high);
+        cout << endl;
+        }
+    }
+   return 0;
+}
