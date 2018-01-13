@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+ll rev(ll &a)
+{
+    ll tmp=0;
+    ll rm;
+    while(a!=0)
+    {
+        rm=a%10;
+        tmp=tmp*10 + rm;
+        a=a/10;
+    }
+    return tmp;
+}
+int main()
+{
+    ll test;
+    cin >> test;
+    while(test--)
+    {
+        ll a ,b;
+        cin >> a >>b;
+        ll res = rev(a) + rev(b);
+        cout << rev(res) << endl;
+    }
+}
