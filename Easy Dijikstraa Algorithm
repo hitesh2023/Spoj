@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#define ll long long
+#include <climits>
+#define N 10001
+using namespace std;
+typedef pair<ll,ll> pll;
+vector <pll> adj[N];
+vector <ll> dist;
+
+
+void DIJ(ll source)
+{
+    dist.assign(N,1e17);
+    dist[source]=0;
+    priority_queue <pll , vector<pll> , greater<pll > >pq;
+    pq.push(make_pair(0 , source));
+    while(!pq.empty())
+    {
+        pll pr = pq.top();
+        pq.pop();
+        ll dis = pr.first;
+        ll node = pr.second;
+        for(auto i1 = begin(adj[node]) ; i1 != end(adj[node]) ; ++i1)
+        {
+            ll from = i1->first;
+            ll wt = i1->second;
+            if(dist[from] > dist[node] + wt)
+            {
+                dist[from] = dist[node] + wt;
+                pq.push(make_pair(dist[from],from));
+            }
+        }
+    }
+}
+int main()
+{
+    ll n , m , a , b ,wt , test , source , dest;
+  cin >> test;
+  while(test--)
+  {
+
+
+    cin >> n >> m;
+    for(int i=1 ; i<=m ; i++)
+    {
+        cin >> a >> b >> wt;
+        adj[a].push_back(make_pair(b,wt));
+       // adj[b].push_back(make_pair(a,wt));
+    }
+
+    cin >> source >> dest;
+    DIJ(source);
+    ll ans = dist[dest];
+    if(ans != 1e17)
+    cout << ans << endl;
+    else
+    cout << "NO" << endl;
+
+    for(int i=0 ; i<N ; i++)
+        adj[i].clear();
+
+
+  }
+  return 0;
+}
