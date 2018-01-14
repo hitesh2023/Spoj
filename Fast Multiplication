@@ -1,0 +1,17 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class Test {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String args[]) {
+         long test;
+         test = sc.nextLong();
+        while (test-- > 0){
+
+            BigInteger b1 = new BigInteger(sc.next());
+            BigInteger b2 = new BigInteger(sc.next());
+            b1 = b1.multiply(b2);
+            System.out.println(b1);
+        }
+    }
+}
